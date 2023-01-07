@@ -26,7 +26,7 @@ bash ./scripts/train.sh
 
 ## Citation
 
-```
+```bibtex
 @inproceedings{Kim2022DynaGAN,
     title     = {DynaGAN: Dynamic Few-shot Adaptation of GANs to Multiple Domains},
     author    = {Seongtae Kim and Kyoungkook Kang and Geonung Kim and Seung-Hwan Baek and Sunghyun Cho},

@@ -109,6 +109,7 @@ def save_checkpoint(net, g_optim, style_latent, ckpt_name, is_dynagan=True):
             "latent_avg": net.generator_trainable.mean_latent,
             "style_latent": style_latent,
             "is_dynagan": is_dynagan,
+            "c_dim": net.generator_trainable.c_dim,
         }
     
     torch.save(

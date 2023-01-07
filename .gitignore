@@ -147,3 +147,4 @@ pretrained_models/*
 docs/
 
 @eaDir/
+.DS_Store

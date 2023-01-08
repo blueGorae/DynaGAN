@@ -37,11 +37,11 @@ bash ./scripts/train.sh
 ```
 
 ## Generating samples
-To generate multiple domain images, run
+To generate multiple domain image samples, run
 ```shell
 bash ./scripts/generate.sh
 ```
-
+The outputs will be stored in `samples/`.
 
 ## Acknowledgments
 This code is borrowed from [MindtheGap](https://github.com/ZPdesu/MindTheGap).

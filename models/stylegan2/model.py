@@ -557,11 +557,18 @@ class Generator(nn.Module):
 
         return noises
 
-    def mean_latent(self, n_latent):
-        latent_in = torch.randn(
-            n_latent, self.style_dim, device=self.input.input.device
-        )
-        latent = self.style(latent_in).mean(0, keepdim=True)
+    def mean_latent(self, n_latent=4096):
+        with torch.no_grad():
+            latent_list = []
+            BATCH_SIZE = 128
+            
+            for _ in range(n_latent/BATCH_SIZE):
+                latent_in = torch.randn(
+                    BATCH_SIZE, self.style_dim, device=self.input.input.device
+                )
+                latent = self.style(latent_in)
+                latent_list.append(latent)
+            latent = torch.cat(latent_list).mean(0, keepdim=True)
 
         return latent
 

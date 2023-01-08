@@ -69,7 +69,11 @@ class Net(nn.Module):
         PCA_path = self.opts.ckpt[:-3] + '_PCA.npz'
 
         if not os.path.isfile(PCA_path):
-            self.build_PCA_model(PCA_path)
+            download_weight(PCA_path)
+            try:
+                assert os.path.isfile(PCA_path)
+            except AssertionError:
+                self.build_PCA_model(PCA_path)
 
         PCA_model = np.load(PCA_path)
         self.X_mean = torch.from_numpy(PCA_model['X_mean']).float().to(device)
@@ -172,9 +176,6 @@ class II2S(nn.Module):
 
         self.setup_dataloader(image_path=image_path, align_input=align_input)
         device = self.opts.device
-
-        # ibar = tqdm(self.dataloader, desc='Images')
-        # for ref_im_H, ref_im_L, ref_name in ibar:
 
         for ref_im_H, ref_im_L, ref_name in tqdm(self.dataloader):
             optimizer, latent = self.setup_optimizer(len(ref_im_H))

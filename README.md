@@ -24,16 +24,27 @@ conda env create -f environment/environment.yml
 Download files under `pretrained_models/`.
 | Model | Description
 | :--- | :----------
-|[FFHQ](https://drive.google.com/file/d/1XQabKtkpMltyZkFYidX4jd8Zrii5eTyI/view?usp=sharing) | StyleGAN model pretrained on [FFHQ](https://github.com/NVlabs/ffhq-dataset) with 1024x1024 output resolution.
-|[FFHQ_PCA](https://drive.google.com/file/d/13b81CBny0VgxWJWWEylNJkNbXuQ512ug/view?usp=sharing) | PCA components of the pretrained StyleGAN(FFHQ) latent space.
-|[ArcFace](https://drive.google.com/file/d/1bwcB_AvbD0_qHGUoQCxzbp2wEurhjD4c/view?usp=sharing) | Pretrained face recognition model to calculate identity loss.
-|[AFHQ_Cat](https://drive.google.com/file/d/17K_U0IKaVKoQT4lJ6zf1h6ijfmrHSB7B/view?usp=sharing) | StyleGAN model pretrained on [AFHQ_Cat](https://github.com/clovaai/stargan-v2) with 512x512 output resolution.
-|[AFHQ_Cat_PCA](https://drive.google.com/file/d/1_JiWz-8eiki-LFFF0Aerf8GpM6mpjpYR/view?usp=share_link) | PCA components of the pretrained StyleGAN(AFHQ_Cat) latent space.
+|[ffhq.pt](https://drive.google.com/uc?id=1XQabKtkpMltyZkFYidX4jd8Zrii5eTyI&export=download) | StyleGAN model pretrained on [FFHQ](https://github.com/NVlabs/ffhq-dataset) with 1024x1024 output resolution.
+|[ffhq_PCA.npz](https://drive.google.com/uc?id=13b81CBny0VgxWJWWEylNJkNbXuQ512ug&export=download) | PCA components of the pretrained StyleGAN(FFHQ) latent space.
+|[ArcFace](https://drive.google.com/uc?id=1bwcB_AvbD0_qHGUoQCxzbp2wEurhjD4c&export=download) | Pretrained face recognition model to calculate identity loss.
+|[afhqcat.pt](https://drive.google.com/uc?id=17K_U0IKaVKoQT4lJ6zf1h6ijfmrHSB7B&export=download) | StyleGAN model pretrained on [AFHQ_Cat](https://github.com/clovaai/stargan-v2) with 512x512 output resolution.
+|[afhqcat_PCA.npz](https://drive.google.com/uc?id=1_JiWz-8eiki-LFFF0Aerf8GpM6mpjpYR&export=download) | PCA components of the pretrained StyleGAN(AFHQ_Cat) latent space.
 
 ## Training
+Before training your model, put target images in the `target_data/` directory and run
 ```shell
 bash ./scripts/train.sh
 ```
+
+## Generating samples
+To generate multiple domain images, run
+```shell
+bash ./scripts/generate.sh
+```
+
+
+## Acknowledgments
+This code is borrowed from [MindtheGap](https://github.com/ZPdesu/MindTheGap).
 
 ## Citation
 

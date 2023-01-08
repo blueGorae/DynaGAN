@@ -183,6 +183,9 @@ class DynaGAN(torch.nn.Module):
         self.mse = torch.nn.MSELoss()
         
         if self.args.lambda_id >0.:
+
+            if not os.path.exists(self.args.id_model_path):
+                download_weight(self.args.id_model_path)
             self.id_loss = IDLoss(self.args.id_model_path)
         
         self.n_latent = self.generator_frozen.generator.n_latent
@@ -201,18 +204,7 @@ class DynaGAN(torch.nn.Module):
         
         
         for style_img in style_img_dir:
-            # aligned_im_path = os.path.join('style_images', 'Aligned', Path(style_img).stem + '.png')
-            # unaligned_im_path = os.path.join('style_images', 'Unaligned', style_img)
-            # if os.path.exists(aligned_im_path) or os.path.exists(unaligned_im_path):
-            #     if not os.path.exists(aligned_im_path):
-            #         predictor_weight = os.path.join('pretrained_models', 'shape_predictor_68_face_landmarks.dat')
-            #         download_weight(predictor_weight)
-            #         predictor = dlib.shape_predictor(predictor_weight)
 
-            #         face = align_face(unaligned_im_path, predictor, output_size=II2S_s_opts.output_size)
-            #         face.save(aligned_im_path)
-
-                #########################
             ZP_input_img = PIL.Image.open(style_img).convert('RGB')
             ZP_input_imgs.append(ZP_input_img)
             
@@ -225,8 +217,6 @@ class DynaGAN(torch.nn.Module):
             ZP_img_tensor_256 = 2.0 * torchvision.transforms.ToTensor()(ZP_input_img_256).unsqueeze(0).cuda() - 1.0
             ZP_imgs_tensor_256.append(ZP_img_tensor_256)
                 
-            # else:
-            #     sys.exit('Image {} does not exist'.format(style_img))
             
         self.ZP_img_tensor = torch.cat(ZP_imgs_tensor).detach().cpu()
         self.ZP_img_tensor_256 = torch.cat(ZP_imgs_tensor_256).detach().cpu()
@@ -263,8 +253,6 @@ class DynaGAN(torch.nn.Module):
             inference=False
     ):
 
-        # if self.training:
-        #     self.generator_trainable.unfreeze_layers()
         with torch.no_grad():
             w_styles = self.generator_frozen.style(styles)
             frozen_img = self.generator_frozen(w_styles, input_is_latent=True, truncation=1,

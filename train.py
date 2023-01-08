@@ -82,7 +82,7 @@ def train(args, output_dir):
             save_checkpoint(net, g_optim, style_latent, ckpt_name)
 
     ckpt_name = '{}/{}.pt'.format(ckpt_dir, "final")
-    save_checkpoint(net, g_optim, style_latent, ckpt_name)
+    save_checkpoint(net, g_optim, style_latent, ckpt_name, human_face=args.human_face)
 
 
 
@@ -102,7 +102,8 @@ def save_image(net, fixed_z, args, sample_dir, i):
             save_images(rec_dst, sample_dir, f"rec_{domain_idx}", grid_rows, i+1)
         
         
-def save_checkpoint(net, g_optim, style_latent, ckpt_name, is_dynagan=True):
+def save_checkpoint(net, g_optim, style_latent, ckpt_name, human_face=False, is_dynagan=True):
+    print(f"Save the checkpoint! {ckpt_name}")
     save_dict = {
             "g_ema": net.generator_trainable.generator.state_dict(),
             "g_optim": g_optim.state_dict(),
@@ -110,6 +111,7 @@ def save_checkpoint(net, g_optim, style_latent, ckpt_name, is_dynagan=True):
             "style_latent": style_latent,
             "is_dynagan": is_dynagan,
             "c_dim": net.generator_trainable.c_dim,
+            "human_face": human_face
         }
     
     torch.save(
@@ -133,7 +135,7 @@ if __name__ == "__main__":
     parser.add_argument("--no_scaling",  action='store_true', help="no filter scaling")
     parser.add_argument("--no_residual",  action='store_true', help="no residual scaling")
     parser.add_argument("--id_model_path",  type=str, default="pretrained_models/model_ir_se50.pth", help="identity path")
-    parser.add_argument("--human_face", action='store_true', help="Whether it is for human faces")
+    parser.add_argument("--human_face", action='store_true', help="Whether it is for human faces", default=False)
     args = option.parse()
     
     args.style_img_dir = glob.glob(os.path.join(args.style_img_dir, "*.jpg")) + glob.glob(os.path.join(args.style_img_dir, "*.png")) + glob.glob(os.path.join(args.style_img_dir, "*.jpeg"))

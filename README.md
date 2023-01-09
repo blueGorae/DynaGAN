@@ -31,7 +31,7 @@ Download files under `pretrained_models/`.
 |[afhqcat_PCA.npz](https://drive.google.com/uc?id=1_JiWz-8eiki-LFFF0Aerf8GpM6mpjpYR&export=download) | PCA components of the pretrained StyleGAN(AFHQ_Cat) latent space.
 
 ## Training
-Before training your model, put target images in the `target_data/` directory and run
+Before training your model, put target images in the `target_data/raw_data` directory and run
 ```shell
 bash ./scripts/train.sh
 ```
